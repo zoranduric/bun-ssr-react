@@ -5,8 +5,12 @@ Bun.serve({
   async fetch(req) {
     const { pathname } = new URL(req.url);
     if (pathname === "/") {
-      const App = require("./App").default;
-      const html = renderToString(<Index children={<App />} />);
+      const App = require("./App");
+      const Compontent = App.default;
+      const serverSideProps = await App.getServerSideProps();
+      const html = renderToString(
+        <Index initialData={serverSideProps.props} children={<Compontent {...serverSideProps.props} />} />
+      );
       return new Response(html, {
         headers: {
           "Content-Type": "text/html; charset=utf-8",
