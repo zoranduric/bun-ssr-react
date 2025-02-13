@@ -1,7 +1,7 @@
 import { Index } from "./index";
 import { renderToString } from "react-dom/server";
 
-Bun.serve({
+const server = Bun.serve({
   async fetch(req) {
     const { pathname } = new URL(req.url);
     if (pathname === "/") {
@@ -31,3 +31,4 @@ Bun.serve({
   },
   port: process.env.Port || 8080,
 });
+console.log(`Listening on ${server.url}`);
